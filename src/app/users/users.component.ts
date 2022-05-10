@@ -26,7 +26,7 @@ const ELEMENT_DATA: any[] = [
 
 
 export class UsersComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'login','pwd','action'];
+  displayedColumns: string[] = ['id', 'login','pwd','role','action'];
   dataSource = ELEMENT_DATA;
   @ViewChild(MatTable, { static: true })
   table!: MatTable<any>;
@@ -35,16 +35,20 @@ export class UsersComponent implements OnInit {
   constructor(public dialog: MatDialog, private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.apiService.apiGetAll('/user/allUsers').subscribe( (users: any) => {
+    this.refreshUsers();
+
+  }
+
+  private refreshUsers() {
+    this.apiService.apiGetAll('/user/allUsers').subscribe((users: any) => {
       if (users) {
         this.dataSource.push(...users);
         this.table.renderRows();
       }
     },
-    (error) => {
-      console.log(error);
-    });
-
+      (error) => {
+        console.log(error);
+      });
   }
 
   openDialog(action: any,obj:  any) {
@@ -69,16 +73,21 @@ export class UsersComponent implements OnInit {
     var d = new Date();
     this.apiService.apiPost('/user/addUser',{
       login:row_obj.login,
-      pwd:row_obj.pwd
+      pwd:row_obj.pwd,
+      role:row_obj.role,
     }).subscribe( (response: any) =>{
-      this.dataSource.push({
-        id:response.id,
-        login:response.login,
-        pwd:response.pwd,
-  
-  
-      });
+      this.refreshUsers();
       this.table.renderRows();
+      // this.dataSource.push({
+      //   id:response.id,
+      //   login:response.login,
+      //   pwd:response.pwd,
+  
+  
+      // });
+      // this.table.renderRows();
+    
+
     })
 
     
@@ -88,14 +97,17 @@ export class UsersComponent implements OnInit {
       if(value.id == row_obj.id){
         value.login=row_obj.login;
         value.pwd=row_obj.pwd;
+        value.role=row_obj.role;
 
       }
       this.apiService.apiPut('/user/updateUser',{
         id : row_obj.id,
         login:row_obj.login,
-        pwd:row_obj.pwd
+        pwd:row_obj.pwd,
+        role:row_obj.role
       }).subscribe( (response: any) =>{
-        this.table.renderRows();
+        this.refreshUsers();
+
       })
   
       return true;

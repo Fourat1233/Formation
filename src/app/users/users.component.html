@@ -28,9 +28,11 @@
           <td mat-cell *matCellDef="let element"> {{element.pwd}} </td>
         </ng-container>
 
-  
-
-
+        <!-- Name Column -->
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef> role </th>
+          <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+        </ng-container>
 
 
 
