@@ -19,7 +19,7 @@ export class ApiService {
   user: any;
   users: any;
   jwtToken :any;
-  private host = 'http://localhost:3000';
+  private host = 'http://localhost:8090';
 
   // private apiUrl: string = environment.apiUrl;
 
@@ -27,7 +27,7 @@ export class ApiService {
 
 
   public register(user: object) {
-    return this.http.post('http://127.0.0.1:3000/api/account/register', user, {
+    return this.http.post('http://127.0.0.1:8090/api/auth/signin', user, {
       headers: new HttpHeaders({
            'Content-Type':  'application/json',
          })
@@ -103,9 +103,9 @@ getUserAllData() {
 }
 
 sendCredential(userName: string, password: string): Observable<any> {
-    const credentials = {userName, password};
+    const credentials = {username: userName, password};
 
-    return this.http.post<any>('http://localhost:3000/api/account/login', credentials);
+    return this.http.post<any>('http://localhost:8090/api/auth/signin', credentials);
 }
 
 

@@ -19,6 +19,8 @@ import { LoginComponent } from './login/login.component';
 import { HttpConfigInterceptor } from './core/interceptor/httpconfig.interceptor';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { JwtHelperService, JwtModule, JwtModuleOptions, JWT_OPTIONS  } from '@auth0/angular-jwt';
+import { FormationComponent } from './formation/formation.component';
+import { FormationDialogComponent } from './formation-dialog/formation-dialog.component';
 
 const JWT_Module_Options: JwtModuleOptions = ({
   config: {
@@ -32,7 +34,10 @@ const JWT_Module_Options: JwtModuleOptions = ({
     NavbarComponent,
     UsersComponent,
     DialogBoxComponent,
-    LoginComponent
+    LoginComponent,
+    FormationComponent,
+    FormationDialogComponent,
+  
   ],
   imports: [
     BrowserModule,

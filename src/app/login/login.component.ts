@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('token')) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/users']);
     }
   }
 
@@ -28,12 +28,12 @@ export class LoginComponent implements OnInit {
     this.authService.sendCredential(this.userName, this.password).subscribe(
       data => {
        // this.token.saveToken(data.token);
-        localStorage.setItem('account', JSON.stringify(data.account));
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('account', JSON.stringify(data));
+        localStorage.setItem('token', data.accessToken);
         this.snackBar.open('Connected Sucessfully ');
-        if (data.account.role === 'admin' || data.account.role === 'super-admin') {
-          this.router.navigate(['/dashboard']);
-        }
+     
+          this.router.navigate(['/users']);
+        
       },
       error => {
         console.log(error);

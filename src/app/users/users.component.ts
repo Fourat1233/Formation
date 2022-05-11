@@ -26,7 +26,7 @@ const ELEMENT_DATA: any[] = [
 
 
 export class UsersComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'login','pwd','role','action'];
+  displayedColumns: string[] = ['id', 'mail','pernom','nom','tel',"type",'organisme','action'];
   dataSource = ELEMENT_DATA;
   @ViewChild(MatTable, { static: true })
   table!: MatTable<any>;
@@ -40,9 +40,9 @@ export class UsersComponent implements OnInit {
   }
 
   private refreshUsers() {
-    this.apiService.apiGetAll('/user/allUsers').subscribe((users: any) => {
+    this.apiService.apiGetAll('/Formateur/allFormateurs').subscribe((users: any) => {
       if (users) {
-        this.dataSource.push(...users);
+        this.dataSource = users
         this.table.renderRows();
       }
     },
@@ -71,40 +71,38 @@ export class UsersComponent implements OnInit {
 
   addRowData(row_obj: any){
     var d = new Date();
-    this.apiService.apiPost('/user/addUser',{
-      login:row_obj.login,
-      pwd:row_obj.pwd,
-      role:row_obj.role,
+    this.apiService.apiPost('/Formateur/addFormateur',{
+      nom : row_obj.nom,
+      pernom:row_obj.pernom,
+      mail:row_obj.mail,
+      tel:row_obj.tel,
+      type:row_obj.type,
+      organisme:{id :row_obj.organisme.id}
     }).subscribe( (response: any) =>{
       this.refreshUsers();
       this.table.renderRows();
-      // this.dataSource.push({
-      //   id:response.id,
-      //   login:response.login,
-      //   pwd:response.pwd,
-  
-  
-      // });
-      // this.table.renderRows();
-    
-
     })
 
-    
   }
   updateRowData(row_obj: any){
     this.dataSource = this.dataSource.filter((value: any,key: any)=>{
       if(value.id == row_obj.id){
-        value.login=row_obj.login;
-        value.pwd=row_obj.pwd;
-        value.role=row_obj.role;
+        
+        value.nom = row_obj.nom,
+        value.pernom=row_obj.pernom,
+        value.mail=row_obj.mail,
+        value.tel=row_obj.tel,
+        value.type=row_obj.type,
+        value.organisme={id :row_obj.organisme.id}
 
       }
-      this.apiService.apiPut('/user/updateUser',{
-        id : row_obj.id,
-        login:row_obj.login,
-        pwd:row_obj.pwd,
-        role:row_obj.role
+      this.apiService.apiPut(`/Formateur/updateFormateur/${row_obj.id}`,{
+        nom : row_obj.nom,
+        pernom:row_obj.pernom,
+        mail:row_obj.mail,
+        tel:row_obj.tel,
+        type:row_obj.type,
+        organisme:{id :row_obj.organisme.id}
       }).subscribe( (response: any) =>{
         this.refreshUsers();
 
@@ -119,7 +117,7 @@ export class UsersComponent implements OnInit {
     this.dataSource = this.dataSource.filter((value: any,key: any)=>{
       return value.id != row_obj.id;
     });
-    this.apiService.apiDelete(`/user/deleteUser/${row_obj.id}`).subscribe( (response: any) =>{
+    this.apiService.apiDelete(`/Formateur/deleteFormateur/${row_obj.id}`).subscribe( (response: any) =>{
         console.log(response);
     })
 

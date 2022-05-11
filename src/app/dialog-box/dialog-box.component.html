@@ -3,20 +3,44 @@
 <div mat-dialog-content>
 
   <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input placeholder="{{action}} login" matInput [(ngModel)]="local_data.login">
+    <input placeholder="{{action}} nom" matInput [(ngModel)]="local_data.nom">
   </mat-form-field>
+  
+  
   <mat-form-field *ngIf="action != 'Delete'; ">
-    <input placeholder="{{action}} pwd" matInput [(ngModel)]="local_data.pwd">
+    <input placeholder="{{action}} pernom" matInput [(ngModel)]="local_data.pernom">
   </mat-form-field>
+  
+  <mat-form-field *ngIf="action != 'Delete'; ">
+    <input placeholder="{{action}} mail" matInput [(ngModel)]="local_data.mail">
+  </mat-form-field>
+  
+  <mat-form-field *ngIf="action != 'Delete'; ">
+    <input placeholder="{{action}} tel" matInput [(ngModel)]="local_data.tel">
+  </mat-form-field>
+  
 
 
   <mat-form-field *ngIf="action != 'Delete'; ">
-      <mat-label>Choose an option</mat-label>
-      <mat-select  [(ngModel)]="local_data.role">
-        <mat-option value="ROLE_USER">ROLE_USER</mat-option>
-        <mat-option value="ROLE_ADMIN">ROLE_ADMIN</mat-option>
-      </mat-select>
-  </mat-form-field>
+    <mat-label>Choose a Type</mat-label>
+    <mat-select  [(ngModel)]="local_data.type">
+      <mat-option value="interne">interne</mat-option>
+      <mat-option value="externe">externe</mat-option>
+    </mat-select>
+</mat-form-field>
+
+  <mat-form-field *ngIf="action != 'Delete'; ">
+    <mat-label>Choose an option</mat-label>
+    <mat-select  [(ngModel)]="local_data?.organisme.id ">
+      <mat-option *ngFor="let org of origanismes" [value]="org.id">
+        {{org.libelle}}
+      </mat-option>
+    </mat-select>
+</mat-form-field>
+
+
+
+
 
   
 

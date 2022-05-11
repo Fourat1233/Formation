@@ -20,7 +20,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     console.log(request.url);
     if (token) {
 
-        request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token.split(' ')[1]) });
+        request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
     }
 
     if (!request.headers.has('Content-Type') && !request.url.includes('file/add')) {
