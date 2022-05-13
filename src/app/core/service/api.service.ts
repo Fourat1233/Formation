@@ -27,7 +27,7 @@ export class ApiService {
 
 
   public register(user: object) {
-    return this.http.post('http://127.0.0.1:8090/api/auth/signin', user, {
+    return this.http.post('http://127.0.0.1:8090/api/auth/signup', user, {
       headers: new HttpHeaders({
            'Content-Type':  'application/json',
          })

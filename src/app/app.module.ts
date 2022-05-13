@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
@@ -21,6 +21,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { JwtHelperService, JwtModule, JwtModuleOptions, JWT_OPTIONS  } from '@auth0/angular-jwt';
 import { FormationComponent } from './formation/formation.component';
 import { FormationDialogComponent } from './formation-dialog/formation-dialog.component';
+import { SignupComponent } from './signup/signup.component';
 
 const JWT_Module_Options: JwtModuleOptions = ({
   config: {
@@ -37,6 +38,7 @@ const JWT_Module_Options: JwtModuleOptions = ({
     LoginComponent,
     FormationComponent,
     FormationDialogComponent,
+    SignupComponent,
   
   ],
   imports: [
@@ -59,7 +61,9 @@ const JWT_Module_Options: JwtModuleOptions = ({
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService
 ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
 export function jwtTokenGetter() {

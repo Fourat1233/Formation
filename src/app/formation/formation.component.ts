@@ -117,7 +117,7 @@ export class FormationComponent implements OnInit {
           "type_formation": row_obj.type_formation,
           "nb_session": row_obj.nb_session,
           "duree": row_obj.duree,
-          "budget": row_obj.buget,
+          "budget": row_obj.budget,
           "annee": row_obj.annee,
           "domaine": {
             "id": row_obj.domaine.id,

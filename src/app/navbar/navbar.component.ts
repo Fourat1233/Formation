@@ -8,12 +8,20 @@ import { ApiService } from '../core/service/api.service';
 })
 export class NavbarComponent implements OnInit {
   user : any ;
+  logged_in : any ;
+
   constructor( private apiService : ApiService) { }
 
   ngOnInit(): void {
-    this.user = this.apiService.getCurrentUser() ;
-    console.log(this.user);
+   // this.user = this.apiService.getCurrentUser() ;
+    this.logged_in = this.apiService.getLoggedin();
+   
     
+  }
+
+  logout () {
+    this.apiService.setLoggedOut();
+    this.logged_in = false ;
   }
 
 }

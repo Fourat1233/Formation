@@ -1,9 +1,14 @@
 <mat-toolbar color="primary">
     <span>Formation</span>
      <div class="spacer"></div>
-       <a mat-button routerLink="/users">Home</a>
+     <div > 
+       <a mat-button routerLink="/formateurs">Formateurs</a>
        <a mat-button routerLink="/formations">Formations</a>
+       <a *ngIf="logged_in == 'true'  else elseBlock" mat-button routerLink="/login" (click)="logout()">Logout</a>  
+       
+       <ng-template #elseBlock><a  mat-button routerLink="/login">login </a></ng-template>
+      </div>
 
-       <!-- <a mat-button routerLink="/add">About</a>
-       <a mat-button routerLink="/">Contact</a> -->
+
+
    </mat-toolbar>

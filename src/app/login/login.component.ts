@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('token')) {
-      this.router.navigate(['/users']);
+      this.router.navigate(['/formateurs']);
     }
   }
 
@@ -31,8 +31,8 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('account', JSON.stringify(data));
         localStorage.setItem('token', data.accessToken);
         this.snackBar.open('Connected Sucessfully ');
-     
-          this.router.navigate(['/users']);
+          this.authService.setLoggedin();
+          this.router.navigate(['/formateurs']);
         
       },
       error => {
