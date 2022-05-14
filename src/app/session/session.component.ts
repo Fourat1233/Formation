@@ -7,16 +7,15 @@ import { ApiService } from '../Service/api.service';
 import { FormationDialogComponent } from '../formation-dialog/formation-dialog.component';
 import { NotificationService } from '../core/service/notification.service';
 import { SessionDialogComponent } from '../session-dialog/session-dialog.component';
+import { SessionDetailsComponent } from '../session-details/session-details.component';
 
 
 
-// export interface UsersData {
-//   id: number;
 
-// 	   login: String;
-// 	   pwd: String	;
 
-// }
+export interface DialogData {
+  animal: 'panda' | 'unicorn' | 'lion';
+}
 const ELEMENT_DATA: any[] = [
   
 ];
@@ -29,7 +28,7 @@ export class SessionComponent {
   id: string | null;
 
 
-  displayedColumns: string[] = ['date_debut','date_fin', 'nb_participant','formateur','organisme','lieu','action'];
+  displayedColumns: string[] = ['date_debut','date_fin', 'nb_participant','formateur','organisme','lieu','action','participants'];
   dataSource = ELEMENT_DATA;
   @ViewChild(MatTable, { static: true })
   table!: MatTable<any>;
@@ -168,6 +167,15 @@ export class SessionComponent {
 
     })
 
+  }
+
+  openDetails(id : any,nb_participant:any){
+    this.dialog.open(SessionDetailsComponent, {
+      data: {
+        id: id,
+        nb_participant:nb_participant,
+      },
+    });
   }
 
 }

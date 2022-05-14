@@ -1,5 +1,8 @@
 <mat-toolbar color="primary">
     <span>Formation</span>
+    <ul>
+        <li   style="display: block; font-size: x-small;" *ngFor="let role of roles">{{role}}</li>
+    </ul>
      <div class="spacer"></div>
      <div > 
        <a mat-button routerLink="/formateurs">Formateurs</a>
