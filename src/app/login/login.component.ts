@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from 'src/app/core/service/api.service';
-
+import { NotificationService } from '../core/service/notification.service';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   userName: string;
   password: string;
   account: any;
-  constructor( private authService: ApiService, private router: Router,   private snackBar: MatSnackBar)  { }
+  constructor( private authService: ApiService, private router: Router,   private snackBar: MatSnackBar,private notifyService : NotificationService)  { }
 
   ngOnInit() {
     if (localStorage.getItem('token')) {
@@ -30,14 +30,17 @@ export class LoginComponent implements OnInit {
        // this.token.saveToken(data.token);
         localStorage.setItem('account', JSON.stringify(data));
         localStorage.setItem('token', data.accessToken);
-        this.snackBar.open('Connected Sucessfully ');
+       // this.snackBar.open('Connected Sucessfully ');
+        this.notifyService.showSuccess("Connected Sucessfully", "Authentification")
+
           this.authService.setLoggedin();
           this.router.navigate(['/formateurs']);
         
       },
       error => {
         console.log(error);
-        this.snackBar.open('Failed to connect');
+        //this.snackBar.open('Failed to connect');
+        this.notifyService.showError("Connection Failed","Authentification");
       },
 
 

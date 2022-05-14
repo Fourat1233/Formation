@@ -4,6 +4,7 @@ import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from '../Service/api.service';
 import { FormationDialogComponent } from '../formation-dialog/formation-dialog.component';
+import { NotificationService } from '../core/service/notification.service';
 
 
 
@@ -30,7 +31,7 @@ export class FormationComponent implements OnInit {
   table!: MatTable<any>;
 
 
-  constructor(public dialog: MatDialog, private apiService: ApiService) { }
+  constructor(public dialog: MatDialog, private apiService: ApiService,private notifyService : NotificationService) { }
 
   ngOnInit(): void {
     this.refreshUsers();
@@ -60,7 +61,8 @@ export class FormationComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result.event == 'Add'){
-        this.addRowData(result.data);
+        this.addRowData(result.data);       
+
       }else if(result.event == 'Update'){
         this.updateRowData(result.data);
       }else if(result.event == 'Delete'){
@@ -83,6 +85,8 @@ export class FormationComponent implements OnInit {
         "id": row_obj.domaine.id,
     },
     }).subscribe( (response: any) =>{
+      this.notifyService.showSuccess("Formation Added", "Create")
+
       this.refreshUsers();
       this.table.renderRows();
       // this.dataSource.push({
@@ -126,6 +130,7 @@ export class FormationComponent implements OnInit {
 
       }).subscribe( (response: any) =>{
         this.refreshUsers();
+        this.notifyService.showSuccess("Formation Updated", "Update")
 
       })
   
@@ -140,6 +145,8 @@ export class FormationComponent implements OnInit {
     });
     this.apiService.apiDelete(`/Formation/deleteFormation/${row_obj.id}`).subscribe( (response: any) =>{
         console.log(response);
+      this.notifyService.showSuccess("Formation Deleted", "Delete")
+
     })
 
   }

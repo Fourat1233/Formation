@@ -77,7 +77,9 @@ loadToken() {
 public isAuthenticated(): boolean {
   // const token = window.sessionStorage.getItem('token');
   const token = localStorage.getItem('token');
-  return !this.jwtHelper.isTokenExpired(token|| '{}');
+  if (token != null)
+  return !this.jwtHelper.isTokenExpired(token);
+  return false ;
 }
 
 getCurrentUser() {

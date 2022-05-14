@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { CustomValidators } from '../core/providers/CustomValidators';
 import { ApiService } from '../core/service/api.service';
+import { NotificationService } from '../core/service/notification.service';
 
 
 @Component({
@@ -20,10 +20,9 @@ export class SignupComponent implements OnInit {
  }
   );
   Roles: any = ["admin","mod","user"];
-  constructor(private apiService : ApiService, private router: Router,   private snackBar: MatSnackBar) { }
+  constructor(private apiService : ApiService, private router: Router,   private snackBar: MatSnackBar, private notifyService : NotificationService) { }
   ngOnInit() {
     this.signUpForm.valueChanges.subscribe(x => {
-      console.log('form value changed')
       console.log(x)
   })
    
@@ -35,26 +34,34 @@ export class SignupComponent implements OnInit {
     
      this.apiService.register(this.signUpForm.value).subscribe((res)=>{
     
-      this.snackBar.open(' signup successful');
+      // this.snackBar.open(' signup successful');
+      this.notifyService.showInfo("Signup successful", "YESS")
+
       this.apiService.sendCredential(this.signUpForm.value.username, this.signUpForm.value.password).subscribe(
         data => {
          // this.token.saveToken(data.token);
           localStorage.setItem('account', JSON.stringify(data));
           localStorage.setItem('token', data.accessToken);
-          this.snackBar.open('Connected Sucessfully ');
+          // this.snackBar.open('Connected Sucessfully ');
+      this.notifyService.showSuccess("Login successful", "Authetification")
+
             this.apiService.setLoggedin();
             this.router.navigate(['/formateurs']);
         },
         error => {
           console.log(error);
-          this.snackBar.open('Failed to connect');
+          // this.snackBar.open('Failed to connect');
+      this.notifyService.showError("Login Failed", "Authetification")
+
         },
 
       );
       },
       error => {
         console.log(error);
-        this.snackBar.open('Failed to signup');
+        // this.snackBar.open('Failed to signup');
+      this.notifyService.showError("Signup Failed", "Oops")
+
       },
      );
     

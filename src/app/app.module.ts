@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
+import { ToastrModule } from 'ngx-toastr';
 
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 
@@ -22,6 +23,10 @@ import { JwtHelperService, JwtModule, JwtModuleOptions, JWT_OPTIONS  } from '@au
 import { FormationComponent } from './formation/formation.component';
 import { FormationDialogComponent } from './formation-dialog/formation-dialog.component';
 import { SignupComponent } from './signup/signup.component';
+import { NotificationService } from './core/service/notification.service';
+import { ParticipantsComponent } from './participants/participants.component';
+import { ParticipantDialogComponent } from './participant-dialog/participant-dialog.component';
+import { SessionComponent } from './session/session.component';
 
 const JWT_Module_Options: JwtModuleOptions = ({
   config: {
@@ -39,6 +44,9 @@ const JWT_Module_Options: JwtModuleOptions = ({
     FormationComponent,
     FormationDialogComponent,
     SignupComponent,
+    ParticipantsComponent,
+    ParticipantDialogComponent,
+    SessionComponent,
   
   ],
   imports: [
@@ -50,12 +58,13 @@ const JWT_Module_Options: JwtModuleOptions = ({
     SharedModule,
     ReactiveFormsModule,
     JwtModule.forRoot(JWT_Module_Options),
+    ToastrModule.forRoot(),
 
 
   
 
   ],
-  providers: [ApiService,
+  providers: [ApiService,NotificationService,
     { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true },
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
