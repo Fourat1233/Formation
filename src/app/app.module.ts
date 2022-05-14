@@ -27,6 +27,7 @@ import { NotificationService } from './core/service/notification.service';
 import { ParticipantsComponent } from './participants/participants.component';
 import { ParticipantDialogComponent } from './participant-dialog/participant-dialog.component';
 import { SessionComponent } from './session/session.component';
+import { SessionDialogComponent } from './session-dialog/session-dialog.component';
 
 const JWT_Module_Options: JwtModuleOptions = ({
   config: {
@@ -47,6 +48,7 @@ const JWT_Module_Options: JwtModuleOptions = ({
     ParticipantsComponent,
     ParticipantDialogComponent,
     SessionComponent,
+    SessionDialogComponent,
   
   ],
   imports: [
