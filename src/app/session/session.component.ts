@@ -28,20 +28,25 @@ export class SessionComponent {
   id: string | null;
 
 
-  displayedColumns: string[] = ['date_debut','date_fin', 'nb_participant','formateur','organisme','lieu','action','participants'];
+  displayedColumns: string[] = ['date_debut','date_fin', 'nb_participant','formateur','organisme','lieu','participants'];
   dataSource = ELEMENT_DATA;
   @ViewChild(MatTable, { static: true })
   table!: MatTable<any>;
+  isAdmin: boolean | undefined;
 
-
+  
   constructor(public dialog: MatDialog, private apiService: ApiService,private notifyService : NotificationService,private _Activatedroute:ActivatedRoute) {
     this.id=this._Activatedroute.snapshot.paramMap.get("id");
+    this.isAdmin = localStorage.getItem("account")?.includes("ADMIN");
+    if (this.isAdmin)
+    this.displayedColumns.push("action")
     this.refreshUsers();
    }
 
 
 
   private refreshUsers() {
+  
     this.apiService.apiGetAll(`/Formation/${this.id}`).subscribe((users: any) => {
       if (users) {
         this.dataSource = users.session_formation;

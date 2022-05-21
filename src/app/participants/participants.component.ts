@@ -21,16 +21,19 @@ const ELEMENT_DATA: any[] = [
 export class ParticipantsComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['id', 'email','prenom','nom','tel',"type",'organisme','pays','profil','action'];
+  displayedColumns: string[] = ['id', 'email','prenom','nom','tel',"type",'organisme','pays','profil'];
   dataSource = ELEMENT_DATA;
   @ViewChild(MatTable, { static: true })
   table!: MatTable<any>;
 
-
+  isAdmin : any ;
   constructor(public dialog: MatDialog, private apiService: ApiService,private notifyService : NotificationService) { }
 
   ngOnInit(): void {
     this.refreshUsers();
+    this.isAdmin = localStorage.getItem("account")?.includes("ADMIN");
+    if (this.isAdmin)
+    this.displayedColumns.push("action")
   }
 
   private refreshUsers() {

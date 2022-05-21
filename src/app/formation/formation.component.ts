@@ -25,15 +25,19 @@ const ELEMENT_DATA: any[] = [
   styleUrls: ['./formation.component.css']
 })
 export class FormationComponent implements OnInit {
-  displayedColumns: string[] = ['titre','type_formation', 'nb_session','duree','budget','annee','domaine','action'];
+  displayedColumns: string[] = ['titre','type_formation', 'nb_session','duree','budget','annee','domaine'];
   dataSource = ELEMENT_DATA;
   @ViewChild(MatTable, { static: true })
   table!: MatTable<any>;
+  isAdmin: boolean | undefined;
 
 
   constructor(public dialog: MatDialog, private apiService: ApiService,private notifyService : NotificationService) { }
 
   ngOnInit(): void {
+    this.isAdmin = localStorage.getItem("account")?.includes("ADMIN");
+    if (this.isAdmin)
+    this.displayedColumns.push("action")
     this.refreshUsers();
     
 

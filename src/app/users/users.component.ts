@@ -27,15 +27,19 @@ const ELEMENT_DATA: any[] = [
 
 
 export class UsersComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'mail','pernom','nom','tel',"type",'organisme','action'];
+  displayedColumns: string[] = ['id', 'mail','pernom','nom','tel',"type",'organisme'];
   dataSource = ELEMENT_DATA;
   @ViewChild(MatTable, { static: true })
   table!: MatTable<any>;
+  isAdmin: boolean | undefined;
 
 
   constructor(public dialog: MatDialog, private apiService: ApiService,private notifyService : NotificationService) { }
 
   ngOnInit(): void {
+    this.isAdmin = localStorage.getItem("account")?.includes("ADMIN");
+    if (this.isAdmin)
+    this.displayedColumns.push("action")
     this.refreshUsers();
   }
 

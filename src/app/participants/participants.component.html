@@ -1,7 +1,7 @@
 <!-- app.component.html -->
 <div class="container text-center">
 
-    <button mat-button (click)="openDialog('Add',{})" mat-flat-button color="primary">Add Row</button>
+    <button mat-button (click)="openDialog('Add',{})" mat-flat-button color="primary"  [disabled]="!isAdmin">Add Row</button>
   
     <table mat-table [dataSource]="dataSource" #mytable class="my-table mat-elevation-z8">
   
